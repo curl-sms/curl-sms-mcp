@@ -123,7 +123,7 @@ OAuth 2.1 with PKCE (`S256`), dynamic client registration and rotating refresh t
 
 ## Links
 
-[curl-sms.com](https://curl-sms.com) · [MCP docs](https://curl-sms.com/docs/mcp) · [API reference](https://curl-sms.com/docs/api) · [Pricing](https://curl-sms.com/pricing) · [Examples](https://github.com/curl-sms/curl-sms)
+[curl-sms.com](https://curl-sms.com) · [MCP docs](https://curl-sms.com/docs/mcp) · [All integrations](https://curl-sms.com/integrations) · [API reference](https://curl-sms.com/docs/api) · [Pricing](https://curl-sms.com/pricing) · [Examples](https://github.com/curl-sms/curl-sms)
 
 ## License
 
