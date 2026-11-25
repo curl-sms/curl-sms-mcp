@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "curl-sms": {
+      "httpUrl": "https://curl-sms.com/mcp",
+      "headers": {
+        "Authorization": "Bearer $CURLSMS_API_KEY"
+      }
+    }
+  }
+}

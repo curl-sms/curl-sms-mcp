@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "curl-sms": {
+      "url": "https://curl-sms.com/mcp"
+    }
+  }
+}

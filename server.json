@@ -1,0 +1,31 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.curl-sms/curl-sms",
+  "title": "curl-sms",
+  "description": "Send SMS from AI assistants: send, schedule, estimate, track and cancel SMS via curl-sms.",
+  "version": "1.0.0",
+  "websiteUrl": "https://curl-sms.com/docs/mcp",
+  "repository": {
+    "url": "https://github.com/curl-sms/curl-sms-mcp",
+    "source": "github"
+  },
+  "icons": [
+    {
+      "src": "https://curl-sms.com/favicon.svg",
+      "mimeType": "image/svg+xml"
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://curl-sms.com/mcp",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Optional: \"Bearer <curl-sms API key>\" from https://curl-sms.com/app/keys. Clients that support MCP sign-in (OAuth) don't need it.",
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}

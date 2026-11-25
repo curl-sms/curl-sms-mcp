@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "curl-sms": {
+      "type": "http",
+      "url": "https://curl-sms.com/mcp"
+    }
+  }
+}

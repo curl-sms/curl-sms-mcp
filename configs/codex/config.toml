@@ -1,0 +1,6 @@
+# ~/.codex/config.toml
+# Put your key into the CURLSMS_API_KEY environment variable,
+# or remove bearer_token_env_var and run: codex mcp login curl-sms
+[mcp_servers.curl-sms]
+url = "https://curl-sms.com/mcp"
+bearer_token_env_var = "CURLSMS_API_KEY"

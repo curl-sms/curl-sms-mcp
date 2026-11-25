@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "23 6 * * 1" # weekly: is the hosted server still answering?
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  configs:
+    name: Validate configs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: JSON and TOML parse
+        run: |
+          python - <<'EOF'
+          import json, pathlib, tomllib
+          for p in pathlib.Path(".").rglob("*.json"):
+              json.loads(p.read_text(encoding="utf-8")); print("ok", p)
+          for p in pathlib.Path("configs").rglob("*.toml"):
+              tomllib.loads(p.read_text(encoding="utf-8")); print("ok", p)
+          EOF
+      - name: server.json against the MCP registry schema
+        run: |
+          pip install check-jsonschema
+          schema=$(python -c "import json; print(json.load(open('server.json'))['\$schema'])")
+          check-jsonschema --schemafile "$schema" server.json
+      - name: Every config points at the hosted server
+        run: |
+          for f in $(git ls-files 'configs/*'); do grep -q 'https://curl-sms.com/mcp' "$f" || { echo "$f has no server URL"; exit 1; }; done
+
+  server:
+    name: Hosted server reachable
+    runs-on: ubuntu-latest
+    steps:
+      - name: OAuth metadata
+        run: curl -fsS https://curl-sms.com/.well-known/oauth-protected-resource/mcp | python3 -m json.tool
+      - name: Unauthenticated call asks for sign-in
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' -X POST https://curl-sms.com/mcp \
+            -H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream' \
+            -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"ci","version":"1"}}}')
+          echo "HTTP $code"
+          test "$code" = 401
